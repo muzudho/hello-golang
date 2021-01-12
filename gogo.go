@@ -10,6 +10,8 @@ import (
 )
 
 const (
+	// komi - コミ☆（＾～＾）
+	komi = 6.5
 	// BoardSize - 何路盤。
 	BoardSize = 9
 	// Width - 枠込み。
@@ -72,7 +74,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo04.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo05.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -147,6 +166,11 @@ func takeStone(tz int, color int) {
 	}
 }
 
+const (
+	// FillEyeErr - 何かのエラー？
+	FillEyeErr = 1
+)
+
 var moves int
 var record [1000]int
 
@@ -154,7 +178,8 @@ func main() {
 	// GoGoV1()
 	// GoGoV2()
 	// GoGoV3()
-	GoGoV4()
+	// GoGoV4()
+	GoGoV5()
 }
 
 // GoGoV1 - バージョン１。
@@ -193,9 +218,16 @@ func GoGoV3() {
 	}
 }
 
-// GoGoV4 - バージョン３。
+// GoGoV4 - バージョン４。
 func GoGoV4() {
 	color := 1
 	rand.Seed(time.Now().UnixNano())
-	playout(color)
+	playoutV4(color)
+}
+
+// GoGoV5 - バージョン５。
+func GoGoV5() {
+	color := 1
+	rand.Seed(time.Now().UnixNano())
+	playoutV5(color)
 }

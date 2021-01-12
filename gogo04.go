@@ -17,11 +17,6 @@ import (
 	// "unsafe"
 )
 
-const (
-	// FillEyeErr - 何かのエラー？
-	FillEyeErr = 1
-)
-
 func putStoneV4(tz int, color int, fillEyeErr int) int {
 	var around = [4][3]int{}
 	var liberty, stone int
@@ -123,7 +118,8 @@ func putStoneV4(tz int, color int, fillEyeErr int) int {
 // 	return z
 // }
 
-func playout(turnColor int) int {
+// playoutV4 - 最後まで石を打ちます。
+func playoutV4(turnColor int) int {
 	color := turnColor
 	previousZ := 0
 	loopMax := BoardSize*BoardSize + 200
