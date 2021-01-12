@@ -47,3 +47,9 @@ gore>
 ```
 
 `[Ctrl] + [D]` で終了。  
+
+## Modules の使い方
+
+```shell
+go mod init github.com/muzudho/hello-golang
+```

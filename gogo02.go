@@ -17,26 +17,6 @@ import (
 	// "unsafe"
 )
 
-const (
-	BoardSize = 9
-	Width     = (BoardSize + 2)
-	BoardMax  = (Width * Width)
-)
-
-var board = [BoardMax]int{
-	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, //    1 2 3 4 5 6 7 8 9
-	3, 0, 0, 0, 0, 0, 2, 0, 0, 0, 3, // 1 ������������������
-	3, 0, 0, 0, 0, 2, 1, 2, 2, 2, 3, // 2 ������������������
-	3, 0, 0, 0, 0, 2, 1, 1, 1, 1, 3, // 3 ������������������
-	3, 0, 0, 0, 0, 0, 2, 1, 2, 2, 3, // 4 ������������������
-	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, // 5 ������������������
-	3, 0, 1, 2, 0, 0, 0, 0, 0, 0, 3, // 6 ������������������
-	3, 1, 2, 0, 2, 0, 0, 0, 0, 0, 3, // 7 ������������������
-	3, 0, 1, 2, 0, 2, 2, 1, 1, 0, 3, // 8 ������������������
-	3, 0, 0, 0, 0, 2, 1, 0, 2, 1, 3, // 9 ������������������
-	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-}
-
 var dir4 = [4]int{1, Width, -1, -Width}
 var ko_z int
 
@@ -165,12 +145,8 @@ func put_stone(tz int, color int) int {
 	return 0
 }
 
-//   var usi_koma_kanji = [20]string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九",
-//   "十", "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱","⑲"}
-var usi_koma_kanji = [20]string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九",
-	"❿", "⓫", "⓬", "⓭", "⓮", "⓯", "⓰", "⓱", "⓲", "⓳"}
-
-func PrintBoard() {
+// PrintBoardV2 - 盤の描画。
+func PrintBoardV2() {
 	var str = [4]string{"・", "●", "○", "＃"}
 	fmt.Printf("\n   ")
 	for x := 0; x < BoardSize; x++ {
@@ -182,7 +158,7 @@ func PrintBoard() {
 	}
 	fmt.Printf("+\n")
 	for y := 0; y < BoardSize; y++ {
-		fmt.Printf("%s|", usi_koma_kanji[y+1])
+		fmt.Printf("%s|", usiKomaKanji[y+1])
 		for x := 0; x < BoardSize; x++ {
 			fmt.Printf("%s", str[board[x+1+Width*(y+1)]])
 		}
@@ -193,11 +169,4 @@ func PrintBoard() {
 		fmt.Printf("--")
 	}
 	fmt.Printf("+\n")
-}
-
-func GoGo02() {
-	PrintBoard()
-	err := put_stone(get_z(7, 5), 2)
-	fmt.Printf("err=%d\n", err)
-	PrintBoard()
 }
