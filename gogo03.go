@@ -1,3 +1,4 @@
+// Source: https://github.com/bleu48/GoGo
 // 電通大で行われたコンピュータ囲碁講習会をGolangで追う
 package main
 
@@ -144,6 +145,3 @@ func playOneMove(color int) int {
 	putStoneV3(0, color)
 	return z
 }
-
-var moves int
-var record [1000]int

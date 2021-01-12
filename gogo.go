@@ -1,3 +1,6 @@
+// Source: https://github.com/bleu48/GoGo
+// 電通大で行われたコンピュータ囲碁講習会をGolangで追う
+
 package main
 
 import (
@@ -52,7 +55,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo03.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo04.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -127,10 +147,14 @@ func takeStone(tz int, color int) {
 	}
 }
 
+var moves int
+var record [1000]int
+
 func main() {
 	// GoGoV1()
 	// GoGoV2()
-	GoGoV3()
+	// GoGoV3()
+	GoGoV4()
 }
 
 // GoGoV1 - バージョン１。
@@ -167,4 +191,11 @@ func GoGoV3() {
 		}
 		color = flipColor(color)
 	}
+}
+
+// GoGoV4 - バージョン３。
+func GoGoV4() {
+	color := 1
+	rand.Seed(time.Now().UnixNano())
+	playout(color)
 }

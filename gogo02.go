@@ -1,3 +1,4 @@
+// Source: https://github.com/bleu48/GoGo
 // 電通大で行われたコンピュータ囲碁講習会をGolangで追う
 package main
 
