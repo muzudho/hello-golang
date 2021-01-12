@@ -6,19 +6,17 @@ import (
 	"fmt"
 	// "log"
 	// "math"
-	// "math/rand"
+	"math/rand"
 	// "os"
 	// "sort"
 	// "strconv"
 	// "strings"
 	// "sync"
-	// "time"
 	// "unicode"
 	// "unsafe"
 )
 
-// putStoneV2 - 石を置きます。
-func putStoneV2(tz int, color int) int {
+func putStoneV3(tz int, color int) int {
 	var around = [4][3]int{}
 	var liberty, stone int
 	unCol := flipColor(color)
@@ -66,7 +64,9 @@ func putStoneV2(tz int, color int) int {
 	if tz == koZ {
 		return 2
 	}
-	// if wall+mycolSafe==4 {return 3}
+	if wall+mycolSafe == 4 {
+		return 3
+	}
 	if board[tz] != 0 {
 		return 4
 	}
@@ -90,8 +90,8 @@ func putStoneV2(tz int, color int) int {
 	return 0
 }
 
-// PrintBoardV2 - 盤の描画。
-func PrintBoardV2() {
+// PrintBoardV3 - 盤の描画。
+func PrintBoardV3() {
 	// "● " - Visual Studio Code の 全角半角崩れ対応。
 	// "○ " - Visual Studio Code の 全角半角崩れ対応。
 	var str = [4]string{"・", "● ", "○ ", "＃"}
@@ -117,3 +117,33 @@ func PrintBoardV2() {
 	}
 	fmt.Printf("+\n")
 }
+
+func getEmptyZ() int {
+	var x, y, z int
+	for {
+		x = rand.Intn(9) + 1
+		y = rand.Intn(9) + 1
+		z = getZ(x, y)
+		if board[z] == 0 {
+			break
+		}
+	}
+	return z
+}
+
+func playOneMove(color int) int {
+	var z int
+	for i := 0; i < 100; i++ {
+		z := getEmptyZ()
+		err := putStoneV3(z, color)
+		if err == 0 {
+			return z
+		}
+	}
+	z = 0
+	putStoneV3(0, color)
+	return z
+}
+
+var moves int
+var record [1000]int

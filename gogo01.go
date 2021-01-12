@@ -5,9 +5,6 @@ import (
 	"fmt"
 )
 
-var usiKomaKanji = [20]string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九",
-	"❿", "⓫", "⓬", "⓭", "⓮", "⓯", "⓰", "⓱", "⓲", "⓳"}
-
 // PrintBoardV1 - 盤の描画。
 func PrintBoardV1() {
 	// "● " - Visual Studio Code の 全角半角崩れ対応。
