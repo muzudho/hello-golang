@@ -4,8 +4,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math/rand"
+	"os"
+	"strings"
 	"time"
 )
 
@@ -18,7 +21,8 @@ func main() {
 	// GoGoV6()
 	// GoGoV7()
 	// GoGoV8()
-	GoGoV9()
+	// GoGoV9()
+	GoGoV9a()
 }
 
 const (
@@ -173,7 +177,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo09.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo09a.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -338,7 +359,7 @@ func GoGoV8() {
 	for i := 0; i < 20; i++ {
 		allPlayouts = 0
 		z := getBestUctV8(color)
-		addMoves(z, color)
+		addMovesV8(z, color)
 		color = flipColor(color)
 	}
 }
@@ -348,4 +369,66 @@ func GoGoV9() {
 	rand.Seed(time.Now().UnixNano())
 	// testPlayout()
 	selfplay()
+}
+
+// GoGoV9a - バージョン９a。
+func GoGoV9a() {
+	rand.Seed(time.Now().UnixNano())
+	initBoard()
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		command := scanner.Text()
+		str := strings.Split(command, " ")
+		switch str[0] {
+		case "boardsize":
+			fmt.Printf("= \n\n")
+		case "clear_board":
+			initBoard()
+			fmt.Printf("= \n\n")
+		case "quit":
+			os.Exit(0)
+		case "protocol_version":
+			fmt.Printf("= 2\n\n")
+		case "name":
+			fmt.Printf("= GoGo\n\n")
+		case "version":
+			fmt.Printf("= 0.0.1\n\n")
+		case "list_commands":
+			fmt.Printf("= boardsize\nclear_board\nquit\nprotocol_version\nundo\n" +
+				"name\nversion\nlist_commands\nkomi\ngenmove\nplay\n\n")
+		case "komi":
+			fmt.Printf("= 6.5\n\n")
+		case "undo":
+			undo()
+			fmt.Printf("= \n\n")
+		case "genmove":
+			color := 1
+			if strings.ToLower(str[1]) == "w" {
+				color = 2
+			}
+			z := playComputerMove(color, 1)
+			fmt.Printf("= %s\n\n", getCharZ(z))
+		case "play":
+			color := 1
+			if strings.ToLower(str[1]) == "w" {
+				color = 2
+			}
+			ax := strings.ToLower(str[2])
+			fmt.Fprintf(os.Stderr, "ax=%s\n", ax)
+			x := ax[0] - 'a' + 1
+			if ax[0] >= 'i' {
+				x--
+			}
+			y := int(ax[1] - '0')
+			z := getZ(int(x), BoardSize-y+1)
+			fmt.Fprintf(os.Stderr, "x=%d y=%d z=%d\n", x, y, get81(z))
+			if ax == "pass" {
+				z = 0
+			}
+			addMoves9a(z, color, 0)
+			fmt.Printf("= \n\n")
+		default:
+			fmt.Printf("? unknown_command\n\n")
+		}
+	}
 }

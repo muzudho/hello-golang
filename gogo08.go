@@ -240,7 +240,7 @@ func getBestUctV8(color int) int {
 	return bestZ
 }
 
-func addMoves(z int, color int) {
+func addMovesV8(z int, color int) {
 	err := putStoneV4(z, color, FillEyeOk)
 	if err != 0 {
 		fmt.Printf("Err!\n")

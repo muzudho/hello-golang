@@ -100,12 +100,12 @@ func primitiveMonteCalroV9(color int) int {
 	return bestZ
 }
 
-func searchUctV9(color int, node_n int) int {
-	pN := &node[node_n]
+func searchUctV9(color int, nodeN int) int {
+	pN := &node[nodeN]
 	var c *Child
 	var win int
 	for {
-		selectI := selectBestUcb(node_n)
+		selectI := selectBestUcb(nodeN)
 		c = &pN.Children[selectI]
 		z := c.Z
 		err := putStoneV4(z, color, FillEyeErr)
@@ -203,7 +203,7 @@ func selfplay() {
 			fUCT = 0
 		}
 		z := getComputerMove(color, fUCT)
-		addMoves(z, color)
+		addMovesV8(z, color)
 		if z == 0 && moves > 1 && record[moves-2] == 0 {
 			break
 		}
