@@ -15,7 +15,8 @@ func main() {
 	// GoGoV3()
 	// GoGoV4()
 	// GoGoV5()
-	GoGoV6()
+	// GoGoV6()
+	GoGoV7()
 }
 
 const (
@@ -117,7 +118,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo06.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo07.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -257,7 +275,19 @@ func GoGoV6() {
 	color := 1
 	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < 2; i++ {
-		z := primitiveMonteCalro(color)
+		z := primitiveMonteCalroV6(color)
+		putStoneV4(z, color, FillEyeOk)
+		PrintBoardV3()
+		color = flipColor(color)
+	}
+}
+
+// GoGoV7 - バージョン７。
+func GoGoV7() {
+	color := 1
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < 2; i++ {
+		z := primitiveMonteCalroV7(color)
 		putStoneV4(z, color, FillEyeOk)
 		PrintBoardV3()
 		color = flipColor(color)

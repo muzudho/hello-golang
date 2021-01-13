@@ -100,7 +100,7 @@ func playoutV6(turnColor int) int {
 	return countScoreV6(turnColor)
 }
 
-func primitiveMonteCalro(color int) int {
+func primitiveMonteCalroV6(color int) int {
 	tryNum := 30
 	bestZ := 0
 	var bestValue, winRate float64
