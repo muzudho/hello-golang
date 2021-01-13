@@ -1,4 +1,3 @@
-// Source: https://github.com/bleu48/GoGo
 // 電通大で行われたコンピュータ囲碁講習会をGolangで追う
 package main
 
@@ -17,8 +16,7 @@ import (
 	// "unsafe"
 )
 
-// countScore - 得点計算。
-func countScoreV5(turnColor int) int {
+func countScoreV6(turnColor int) int {
 	var mk = [4]int{}
 	var kind = [3]int{0, 0, 0}
 	var score, blackArea, whiteArea, blackSum, whiteSum int
@@ -51,14 +49,13 @@ func countScoreV5(turnColor int) int {
 	if float32(score)-komi > 0 {
 		win = 1
 	}
-	fmt.Printf("blackSum=%2d, (stones=%2d, area=%2d)\n", blackSum, kind[1], blackArea)
-	fmt.Printf("whiteSum=%2d, (stones=%2d, area=%2d)\n", whiteSum, kind[2], whiteArea)
-	fmt.Printf("score=%d, win=%d\n", score, win)
+	// fmt.Printf("blackSum=%2d, (stones=%2d, area=%2d)\n", blackSum, kind[1], blackArea)
+	// fmt.Printf("whiteSum=%2d, (stones=%2d, area=%2d)\n", whiteSum, kind[2], whiteArea)
+	// fmt.Printf("score=%d, win=%d\n", score, win)
 	return win
 }
 
-// playoutV5 - 最後まで石を打ちます。得点を返します。
-func playoutV5(turnColor int) int {
+func playoutV6(turnColor int) int {
 	color := turnColor
 	previousZ := 0
 	loopMax := BoardSize*BoardSize + 200
@@ -95,10 +92,58 @@ func playoutV5(turnColor int) int {
 			break
 		}
 		previousZ = z
-		PrintBoardV3()
-		fmt.Printf("loop=%d,z=%d,c=%d,emptyNum=%d,koZ=%d\n",
-			loop, get81(z), color, emptyNum, get81(koZ))
+		// PrintBoard()
+		// fmt.Printf("loop=%d,z=%d,c=%d,emptyNum=%d,koZ=%d\n",
+		// 	loop, get81(z), color, emptyNum, get81(koZ))
 		color = flipColor(color)
 	}
-	return countScoreV5(turnColor)
+	return countScoreV6(turnColor)
+}
+
+func primitiveMonteCalro(color int) int {
+	tryNum := 30
+	bestZ := 0
+	var bestValue, winRate float64
+	var boardCopy = [BoardMax]int{}
+	koZCopy := koZ
+	copy(boardCopy[:], board[:])
+	if color == 1 {
+		bestValue = -100.0
+	} else {
+		bestValue = 100.0
+	}
+
+	for y := 0; y <= BoardSize; y++ {
+		for x := 0; x < BoardSize; x++ {
+			z := getZ(x+1, y+1)
+			if board[z] != 0 {
+				continue
+			}
+			err := putStoneV4(z, color, FillEyeErr)
+			if err != 0 {
+				continue
+			}
+
+			winSum := 0
+			for i := 0; i < tryNum; i++ {
+				var boardCopy2 = [BoardMax]int{}
+				koZCopy2 := koZ
+				copy(boardCopy2[:], board[:])
+				win := playoutV6(flipColor(color))
+				winSum += win
+				koZ = koZCopy2
+				copy(board[:], boardCopy2[:])
+			}
+			winRate = float64(winSum) / float64(tryNum)
+			if (color == 1 && winRate > bestValue) ||
+				(color == 2 && winRate < bestValue) {
+				bestValue = winRate
+				bestZ = z
+				fmt.Printf("bestZ=%d,color=%d,v=%5.3f,tryNum=%d\n", get81(bestZ), color, bestValue, tryNum)
+			}
+			koZ = koZCopy
+			copy(board[:], boardCopy[:])
+		}
+	}
+	return bestZ
 }

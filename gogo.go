@@ -9,6 +9,15 @@ import (
 	"time"
 )
 
+func main() {
+	// GoGoV1()
+	// GoGoV2()
+	// GoGoV3()
+	// GoGoV4()
+	// GoGoV5()
+	GoGoV6()
+}
+
 const (
 	// komi - コミ☆（＾～＾）
 	komi = 6.5
@@ -91,7 +100,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo05.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo06.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -167,20 +193,14 @@ func takeStone(tz int, color int) {
 }
 
 const (
-	// FillEyeErr - 何かのエラー？
+	// FillEyeErr - 自分の眼を埋めるなってこと☆（＾～＾）？
 	FillEyeErr = 1
+	// FillEyeOk - 自分の眼を埋めてもいいってこと☆（＾～＾）？
+	FillEyeOk = 0
 )
 
 var moves int
 var record [1000]int
-
-func main() {
-	// GoGoV1()
-	// GoGoV2()
-	// GoGoV3()
-	// GoGoV4()
-	GoGoV5()
-}
 
 // GoGoV1 - バージョン１。
 func GoGoV1() {
@@ -230,4 +250,16 @@ func GoGoV5() {
 	color := 1
 	rand.Seed(time.Now().UnixNano())
 	playoutV5(color)
+}
+
+// GoGoV6 - バージョン５。
+func GoGoV6() {
+	color := 1
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < 2; i++ {
+		z := primitiveMonteCalro(color)
+		putStoneV4(z, color, FillEyeOk)
+		PrintBoardV3()
+		color = flipColor(color)
+	}
 }
