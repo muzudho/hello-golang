@@ -16,7 +16,8 @@ func main() {
 	// GoGoV4()
 	// GoGoV5()
 	// GoGoV6()
-	GoGoV7()
+	// GoGoV7()
+	GoGoV8()
 }
 
 const (
@@ -28,6 +29,8 @@ const (
 	Width = (BoardSize + 2)
 	// BoardMax - 枠込み盤の配列サイズ。
 	BoardMax = (Width * Width)
+	// MaxMoves - 最大手数。
+	MaxMoves = 1000
 )
 
 var usiKomaKanji = [20]string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九",
@@ -135,7 +138,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo07.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo08.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -217,8 +237,8 @@ const (
 	FillEyeOk = 0
 )
 
-var moves int
-var record [1000]int
+var moves, allPlayouts int
+var record [MaxMoves]int
 
 // GoGoV1 - バージョン１。
 func GoGoV1() {
@@ -290,6 +310,18 @@ func GoGoV7() {
 		z := primitiveMonteCalroV7(color)
 		putStoneV4(z, color, FillEyeOk)
 		PrintBoardV3()
+		color = flipColor(color)
+	}
+}
+
+// GoGoV8 - バージョン８。
+func GoGoV8() {
+	color := 1
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < 20; i++ {
+		allPlayouts = 0
+		z := getBestUct(color)
+		addMoves(z, color)
 		color = flipColor(color)
 	}
 }

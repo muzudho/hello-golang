@@ -59,7 +59,7 @@ func countScoreV7(turnColor int) int {
 	return win
 }
 
-func playout(turnColor int) int {
+func playoutV7(turnColor int) int {
 	color := turnColor
 	previousZ := 0
 	loopMax := BoardSize*BoardSize + 200
