@@ -129,7 +129,7 @@ func primitiveMonteCalroV7(color int) int {
 				var boardCopy2 = [BoardMax]int{}
 				koZCopy2 := koZ
 				copy(boardCopy2[:], board[:])
-				win := -playout(flipColor(color))
+				win := -playoutV7(flipColor(color))
 				winSum += win
 				koZ = koZCopy2
 				copy(board[:], boardCopy2[:])

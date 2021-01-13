@@ -20,7 +20,9 @@ import (
 
 // PrintBoardV8 - 盤の描画。
 func PrintBoardV8() {
-	var str = [4]string{"・", "●", "○", "＃"}
+	// "● " - Visual Studio Code の 全角半角崩れ対応。
+	// "○ " - Visual Studio Code の 全角半角崩れ対応。
+	var str = [4]string{"・", "● ", "○ ", "＃"}
 	fmt.Printf("\n   ")
 	for x := 0; x < BoardSize; x++ {
 		fmt.Printf("%2d", x+1)
@@ -178,7 +180,7 @@ func selectBestUcb(nodeN int) int {
 	return selectI
 }
 
-func searchUct(color int, nodeN int) int {
+func searchUctV8(color int, nodeN int) int {
 	pN := &node[nodeN]
 	var c *Child
 	var win int
@@ -199,7 +201,7 @@ func searchUct(color int, nodeN int) int {
 		if c.Next == NodeEmpty {
 			c.Next = createNode()
 		}
-		win = -searchUct(flipColor(color), c.Next)
+		win = -searchUctV8(flipColor(color), c.Next)
 	}
 	c.Rate = (c.Rate*float64(c.Games) + float64(win)) / float64(c.Games+1)
 	c.Games++
@@ -207,7 +209,7 @@ func searchUct(color int, nodeN int) int {
 	return win
 }
 
-func getBestUct(color int) int {
+func getBestUctV8(color int) int {
 	max := -999
 	nodeNum = 0
 	uctLoop := 10000
@@ -218,7 +220,7 @@ func getBestUct(color int) int {
 		koZCopy := koZ
 		copy(boardCopy[:], board[:])
 
-		searchUct(color, next)
+		searchUctV8(color, next)
 
 		koZ = koZCopy
 		copy(board[:], boardCopy[:])

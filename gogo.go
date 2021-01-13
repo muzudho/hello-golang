@@ -17,7 +17,8 @@ func main() {
 	// GoGoV5()
 	// GoGoV6()
 	// GoGoV7()
-	GoGoV8()
+	// GoGoV8()
+	GoGoV9()
 }
 
 const (
@@ -155,7 +156,24 @@ var board = [BoardMax]int{
 }
 */
 
+/*
 // gogo08.go 用。
+var board = [BoardMax]int{
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+}
+*/
+
+// gogo09.go 用。
 var board = [BoardMax]int{
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
@@ -172,6 +190,8 @@ var board = [BoardMax]int{
 
 var dir4 = [4]int{1, Width, -1, -Width}
 var koZ int
+var moves, allPlayouts, flagTestPlayout int
+var record [MaxMoves]int
 
 func getZ(x int, y int) int {
 	return y*Width + x
@@ -236,9 +256,6 @@ const (
 	// FillEyeOk - 自分の眼を埋めてもいいってこと☆（＾～＾）？
 	FillEyeOk = 0
 )
-
-var moves, allPlayouts int
-var record [MaxMoves]int
 
 // GoGoV1 - バージョン１。
 func GoGoV1() {
@@ -320,8 +337,15 @@ func GoGoV8() {
 	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < 20; i++ {
 		allPlayouts = 0
-		z := getBestUct(color)
+		z := getBestUctV8(color)
 		addMoves(z, color)
 		color = flipColor(color)
 	}
+}
+
+// GoGoV9 - バージョン９。
+func GoGoV9() {
+	rand.Seed(time.Now().UnixNano())
+	// testPlayout()
+	selfplay()
 }
