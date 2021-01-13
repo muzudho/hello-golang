@@ -32,7 +32,9 @@ func getCharZ(z int) string {
 	if ax >= 'I' {
 		ax++
 	}
-	return string(ax) + string(BoardSize+1-y+'0')
+
+	//return string(ax) + string(BoardSize+1-y+'0')
+	return fmt.Sprintf("%d%d", ax, BoardSize+1-y+'0')
 }
 
 var usiKomaKanjiV9a = [20]string{" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9",
