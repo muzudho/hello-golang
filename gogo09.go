@@ -88,10 +88,10 @@ func primitiveMonteCalroV9(color int) int {
 				copy(board[:], boardCopy2[:])
 			}
 			winRate = float64(winSum) / float64(tryNum)
-			if winRate > bestValue {
+			if bestValue < winRate {
 				bestValue = winRate
 				bestZ = z
-				// fmt.Printf("bestZ=%d,color=%d,v=%5.3f,tryNum=%d\n", get81(bestZ), color, bestValue, tryNum)
+				// fmt.Printf("(primitiveMonteCalroV9) bestZ=%d,color=%d,v=%5.3f,tryNum=%d\n", get81(bestZ), color, bestValue, tryNum)
 			}
 			koZ = koZCopy
 			copy(board[:], boardCopy[:])
@@ -170,8 +170,8 @@ func getComputerMove(color int, fUCT int) int {
 		z = primitiveMonteCalroV9(color)
 	}
 	t := time.Since(st).Seconds()
-	fmt.Printf("(playoutV9) %.1f sec, %.0f playout/sec, play_z=%2d,moves=%d,color=%d,playouts=%d\n",
-		t, float64(allPlayouts)/t, get81(z), moves, color, allPlayouts)
+	fmt.Printf("(playoutV9) %.1f sec, %.0f playout/sec, play_z=%2d,moves=%d,color=%d,playouts=%d,fUCT=%d\n",
+		t, float64(allPlayouts)/t, get81(z), moves, color, allPlayouts, fUCT)
 	return z
 }
 
@@ -204,10 +204,12 @@ func selfplay() {
 		}
 		z := getComputerMove(color, fUCT)
 		addMovesV8(z, color)
+		// パスで２手目以降で棋譜の１つ前（相手）もパスなら終了します。
 		if z == 0 && moves > 1 && record[moves-2] == 0 {
 			break
 		}
-		if moves > 300 {
+		// 自己対局は300手で終了します。
+		if 300 < moves {
 			break
 		} // too long
 		color = flipColor(color)

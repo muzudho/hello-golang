@@ -135,10 +135,10 @@ func primitiveMonteCalroV7(color int) int {
 				copy(board[:], boardCopy2[:])
 			}
 			winRate = float64(winSum) / float64(tryNum)
-			if winRate > bestValue {
+			if bestValue < winRate {
 				bestValue = winRate
 				bestZ = z
-				fmt.Printf("bestZ=%d,color=%d,v=%5.3f,tryNum=%d\n", get81(bestZ), color, bestValue, tryNum)
+				fmt.Printf("(primitiveMonteCalroV7) bestZ=%d,color=%d,v=%5.3f,tryNum=%d\n", get81(bestZ), color, bestValue, tryNum)
 			}
 			koZ = koZCopy
 			copy(board[:], boardCopy[:])

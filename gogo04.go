@@ -54,7 +54,7 @@ func putStoneV4(tz int, color int, fillEyeErr int) int {
 			captureSum += stone
 			koMaybe = z
 		}
-		if c == color && liberty >= 2 {
+		if c == color && 2 <= liberty {
 			mycolSafe++
 		}
 
