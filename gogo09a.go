@@ -94,10 +94,10 @@ func getBestUctV9a(color int) int {
 			bestI = i
 			max = c.Games
 		}
-		// fmt.Fprintf(os.Stderr,"%2d:z=%2d,rate=%.4f,games=%3d\n", i, get81(c.Z), c.Rate, c.Games)
+		// fmt.Fprintf(os.Stderr,"(getBestUctV9a) %2d:z=%2d,rate=%.4f,games=%3d\n", i, get81(c.Z), c.Rate, c.Games)
 	}
 	bestZ := pN.Children[bestI].Z
-	fmt.Fprintf(os.Stderr, "bestZ=%d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
+	fmt.Fprintf(os.Stderr, "(getBestUctV9a) bestZ=%d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
 		get81(bestZ), pN.Children[bestI].Rate, max, allPlayouts, nodeNum)
 	return bestZ
 }

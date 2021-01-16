@@ -152,10 +152,10 @@ func getBestUctV9(color int) int {
 			bestI = i
 			max = c.Games
 		}
-		// fmt.Printf("%2d:z=%2d,rate=%.4f,games=%3d\n", i, get81(c.Z), c.Rate, c.Games)
+		// fmt.Printf("(getBestUctV9) %2d:z=%2d,rate=%.4f,games=%3d\n", i, get81(c.Z), c.Rate, c.Games)
 	}
 	bestZ := pN.Children[bestI].Z
-	fmt.Printf("bestZ=%d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
+	fmt.Printf("(getBestUctV9) bestZ=%d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
 		get81(bestZ), pN.Children[bestI].Rate, max, allPlayouts, nodeNum)
 	return bestZ
 }
@@ -170,7 +170,7 @@ func getComputerMove(color int, fUCT int) int {
 		z = primitiveMonteCalroV9(color)
 	}
 	t := time.Since(st).Seconds()
-	fmt.Printf("%.1f sec, %.0f playoutV9/sec, play_z=%2d,moves=%d,color=%d,playouts=%d\n",
+	fmt.Printf("(playoutV9) %.1f sec, %.0f playout/sec, play_z=%2d,moves=%d,color=%d,playouts=%d\n",
 		t, float64(allPlayouts)/t, get81(z), moves, color, allPlayouts)
 	return z
 }
